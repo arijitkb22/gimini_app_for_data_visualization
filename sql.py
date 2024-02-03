@@ -14,11 +14,11 @@ cursor.execute(table_info)
 
 # Insert records
 cursor.execute(""" insert into EMP values('Arijit', 'SE1', 2, 'UI')""")
-cursor.execute(""" insert into EMP values('Manan', 'SE2', 5, 'QE')""")
-cursor.execute(""" insert into EMP values('Archana', 'SSE', 5, 'BE')""")
-cursor.execute(""" insert into EMP values('Fairoz', 'SSE', 3, 'BE')""")
-cursor.execute(""" insert into EMP values('Rachit', 'SSE', 3, 'QE')""")
-cursor.execute(""" insert into EMP values('Rhea', 'SSE', 5, 'UI')""")
+cursor.execute(""" insert into EMP values('Jit', 'SE2', 5, 'QE')""")
+cursor.execute(""" insert into EMP values('Bimal', 'SSE', 5, 'BE')""")
+cursor.execute(""" insert into EMP values('Sneha', 'SSE', 3, 'BE')""")
+cursor.execute(""" insert into EMP values('Sumit', 'SSE', 3, 'QE')""")
+cursor.execute(""" insert into EMP values('Minhaz', 'SSE', 5, 'UI')""")
 
 #Display Data
 
