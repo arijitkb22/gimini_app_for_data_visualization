@@ -22,11 +22,15 @@ def get_gemini_response(question, prompt):
 def read_sql_quary(sql, db):
     conn = sqlite3.connect(db)
     cur = conn.cursor()
-    cur.execute(sql)
-    rows = cur.fetchall()
-    columns = cur.description
-    result = [column[0] for column in columns]
-    print(result)
+    try:
+        cur.execute(sql)
+        rows = cur.fetchall()
+        columns = cur.description
+        result = [column[0] for column in columns]
+        print(result)
+    except Exception as e:
+        st.error("The error is: ",e)
+
     conn.commit()
     conn.close()
     return [result, rows]
@@ -56,24 +60,34 @@ if submit:
     print(res)
     data = read_sql_quary(res, "employee.db")
     st.subheader("Here is your result: ")
-    print(type(data))
     columns_data = data[0]
     values = data[1]
     print(columns_data)
+    print(values)
+
+    # Create dataframe
+    df_val=[]
+    for items in values:
+        print(items)
+        df_val.append(list(items))
+    print(df_val)
+    dataframe = pd.DataFrame(df_val, columns=columns_data)
+    st.table(dataframe)
+
+    # Plotting value
     head = []
     val = []
-    for item in values:
-        head.append(item[0])
-        val.append(item[1])
+    if len(values[0]) >= 2:
+        for item in values:
+            head.append(item[0])
+            val.append(item[1])
+        # dic=zip(head,val)
+        # st.subheader(dict(dic))
+        fig, ax = plt.subplots()
+        ax.bar(head, val, width=1, edgecolor="white", linewidth=0.7)
+        st.pyplot(fig)
+    else:
+        st.subheader(dict(zip(columns_data, values)))
+        st.error("Sorry!! Did I made a mistake? could you please explain me little elaborately")
 
-    # Create dataframe for plotting
-    # for items in values:
-    #     val.append(list(items))
-    # print(val)
-    # dataframe = pd.DataFrame(val, columns=columns_data)
-    # st.subheader(val)
-    dic=zip(head,val)
-    st.subheader(dict(dic))
-    fig, ax = plt.subplots()
-    ax.bar(head, val, width=1, edgecolor="white", linewidth=0.7)
-    st.pyplot(fig)
+    
